@@ -21,7 +21,9 @@ public class Task03Main {
             Stream<? extends T> stream,
             Comparator<? super T> order,
             BiConsumer<? super T, ? super T> minMaxConsumer) {
+        try (Stream ){
 
-        // your implementation here
+        }
+        //return x -> stream.min(order);
     }
 }
