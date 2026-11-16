@@ -1,7 +1,8 @@
 package com.example.task03;
 
-import java.util.Comparator;
+import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Task03Main {
@@ -22,6 +23,18 @@ public class Task03Main {
             Comparator<? super T> order,
             BiConsumer<? super T, ? super T> minMaxConsumer) {
 
-        // your implementation here
+        if (stream == null || order == null || minMaxConsumer == null)
+            throw new NullPointerException();
+
+        Map.Entry<T, T> result = stream.collect(Collectors.teeing(
+                Collectors.minBy(order),
+                Collectors.maxBy(order),
+                (minOpt, maxOpt) -> new AbstractMap.SimpleEntry<>(
+                        minOpt.orElse(null),
+                        maxOpt.orElse(null)
+                )
+        ));
+
+        minMaxConsumer.accept(result.getKey(), result.getValue());
     }
 }
